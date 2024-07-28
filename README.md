@@ -1,1 +1,1 @@
-# Final_Project-Smart-Classroom
+# Smart Classroom Climate and Lighting Control System with IoT Integration
