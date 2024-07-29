@@ -5,7 +5,7 @@
 // Konfigurasi Wi-Fi
 const char* ssid = "Wokwi-GUEST";
 const char* password = "";
-const char* mqtt_server = "public.mqtthq.com"; 
+const char* mqtt_server = "broker.emqx.io"; 
 const char* username = "";
 const char* pass = "";
 
@@ -61,43 +61,43 @@ void callback(char* topic, byte* payload, unsigned int length) {
   }
   
   if (manualswitch == 1) {
-    if (strstr(topic, "ruangkelas_arief/lamp1")) {
+    if (strstr(topic, "ruangkelas_arief/output/lamp1")) {
         for (int i = 0; i < length; i++) {
           Serial.print((char)payload[i]);
           messageLamp += (char)payload[i];
         }
         if (messageLamp == "On") {
-          digitalWrite(ledPin1, HIGH);
+          analogWrite(ledPin1, 255);
         }
         else if (messageLamp == "Off") {
-          digitalWrite(ledPin1, LOW);
+          analogWrite(ledPin1, 0);
         }
     }
-    if (strstr(topic, "ruangkelas_arief/lamp2")) {
+    if (strstr(topic, "ruangkelas_arief/output/lamp2")) {
         for (int i = 0; i < length; i++) {
           Serial.print((char)payload[i]);
           messageLamp += (char)payload[i];
         }
         if (messageLamp == "On") {
-          digitalWrite(ledPin2, HIGH);
+          analogWrite(ledPin2, 255);
         }
         else if (messageLamp == "Off") {
-          digitalWrite(ledPin2, LOW);
+          analogWrite(ledPin2, 0);
         }
     }
-    if (strstr(topic, "ruangkelas_arief/lamp3")) {
+    if (strstr(topic, "ruangkelas_arief/output/lamp3")) {
         for (int i = 0; i < length; i++) {
           Serial.print((char)payload[i]);
           messageLamp += (char)payload[i];
         }
         if (messageLamp == "On") {
-          digitalWrite(ledPin3, HIGH);
+          analogWrite(ledPin3, 255);
         }
         else if (messageLamp == "Off") {
-          digitalWrite(ledPin3, LOW);
+          digitalWrite(ledPin3, 0);
         }
     }
-    if (strstr(topic, "ruangkelas_arief/fan")) {
+    if (strstr(topic, "ruangkelas_arief/output/fan")) {
         for (int i = 0; i < length; i++) {
           Serial.print((char)payload[i]);
           messageFan += (char)payload[i];
@@ -109,7 +109,7 @@ void callback(char* topic, byte* payload, unsigned int length) {
           digitalWrite(Relay_Fan, LOW);
         }
     }
-    if (strstr(topic, "ruangkelas_arief/purifier")) {
+    if (strstr(topic, "ruangkelas_arief/output/purifier")) {
         for (int i = 0; i < length; i++) {
           Serial.print((char)payload[i]);
           MessagePurifier += (char)payload[i];
@@ -133,11 +133,11 @@ void reconnect() {
     if (client.connect(clientId.c_str(), username, pass)) {
       Serial.println("connected");
       client.subscribe("ruangkelas_arief/kendali");
-      client.subscribe("ruangkelas_arief/lamp1");
-      client.subscribe("ruangkelas_arief/lamp2");
-      client.subscribe("ruangkelas_arief/lamp3");
-      client.subscribe("ruangkelas_arief/fan");
-      client.subscribe("ruangkelas_arief/purifier");
+      client.subscribe("ruangkelas_arief/output/lamp1");
+      client.subscribe("ruangkelas_arief/output/lamp2");
+      client.subscribe("ruangkelas_arief/output/lamp3");
+      client.subscribe("ruangkelas_arief/output/fan");
+      client.subscribe("ruangkelas_arief/output/purifier");
     } else {
       Serial.print("failed, rc=");
       Serial.print(client.state());
