@@ -94,7 +94,7 @@ void callback(char* topic, byte* payload, unsigned int length) {
           analogWrite(ledPin3, 255);
         }
         else if (messageLamp == "Off") {
-          digitalWrite(ledPin3, 0);
+          analogWrite(ledPin3, 0);
         }
     }
     if (strstr(topic, "ruangkelas_arief/output/fan")) {
